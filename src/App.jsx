@@ -62,6 +62,55 @@ const Main = () => {
           </span>
         </div>
       </div>
+      <div className="card-desktop">
+        <div className="price-desktop">
+          <h2 className="pageviews-style">{pageviews}K PAGEVIEWS</h2>
+          <div className="price-month">
+            <span className="price">${calculatePrice()}</span>
+            <span className="price-span">/ {isYearly ? "year" : "month"}</span>
+          </div>
+        </div>
+        <input
+          className="slider"
+          type="range"
+          name="range"
+          min="25"
+          max="200"
+          step="25"
+          value={pageviews}
+          onChange={handleSliderChange}
+        />
+        <div className="billing-container">
+          <span>Monthly Billing</span>
+          <div
+            className={`toggle-button ${isYearly ? "active" : ""}`}
+            onClick={toggleBilling}
+          >
+            <span
+              className={`toggle-circle ${isYearly ? "active" : ""}`}
+            ></span>
+          </div>
+          <span>Yearly Billing</span>
+          <span className="percent">-25%</span>
+        </div>
+        <div className="list-button-desktop">
+          <div className="list">
+            <div className="list-check">
+              <img className="icon-check" src={Check} alt="icon-check" />
+              <span>Unlimited websites</span>
+            </div>
+            <div className="list-check">
+              <img className="icon-check" src={Check} alt="icon-check" />
+              <span>100% data ownership</span>
+            </div>
+            <div className="list-check">
+              <img className="icon-check" src={Check} alt="icon-check" />
+              <span>Email reports</span>
+            </div>
+          </div>
+          <button className="start-my-trial-button">Start my trial</button>
+        </div>
+      </div>
       <div className="card">
         <h2 className="pageviews-style">{pageviews}K PAGEVIEWS</h2>
         <input
