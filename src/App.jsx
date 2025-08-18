@@ -91,7 +91,7 @@ const Main = () => {
             ></span>
           </div>
           <span>Yearly Billing</span>
-          <span className="percent">-25%</span>
+          <span className="percent">25% discount</span>
         </div>
         <div className="list-button-desktop">
           <div className="list">
