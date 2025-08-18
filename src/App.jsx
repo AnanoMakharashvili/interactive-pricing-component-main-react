@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pattern from "./assets/bg-pattern.svg";
 import Circle from "./assets/pattern-circles.svg";
 import Check from "./assets/icon-check.svg";
@@ -8,9 +8,25 @@ const Main = () => {
   const [pageviews, setPageviews] = useState(100);
   const [isYearly, setIsYearly] = useState(false);
 
-  const handleSliderChange = (e) => {
-    setPageviews(Number(e.target.value));
+  const updateSliderBackground = (value, slider) => {
+    const min = slider.min;
+    const max = slider.max;
+    const percent = ((value - min) * 100) / (max - min);
+    slider.style.background = `linear-gradient(to right, hsl(174, 77%, 80%) ${percent}%, hsl(224, 65%, 95%) ${percent}%)`;
   };
+
+  const handleSliderChange = (e) => {
+    const value = Number(e.target.value);
+    setPageviews(value);
+    updateSliderBackground(value, e.target);
+  };
+
+  useEffect(() => {
+    const slider = document.querySelector(".slider");
+    if (slider) {
+      updateSliderBackground(pageviews, slider);
+    }
+  }, []);
 
   const toggleBilling = () => {
     setIsYearly((prev) => !prev);
@@ -28,11 +44,9 @@ const Main = () => {
       200: 40,
     };
     let base = priceMap[pageviews] || 16;
-
     if (isYearly) {
       base = base * 12 * 0.75;
     }
-
     return base.toFixed(2);
   };
 
@@ -48,10 +62,8 @@ const Main = () => {
           </span>
         </div>
       </div>
-
       <div className="card">
         <h2 className="pageviews-style">{pageviews}K PAGEVIEWS</h2>
-
         <input
           className="slider"
           type="range"
@@ -62,12 +74,10 @@ const Main = () => {
           value={pageviews}
           onChange={handleSliderChange}
         />
-
         <div className="price-month">
           <span className="price">${calculatePrice()}</span>
           <span className="price-span">/ {isYearly ? "year" : "month"}</span>
         </div>
-
         <div className="billing-container">
           <span>Monthly Billing</span>
           <div
@@ -81,7 +91,6 @@ const Main = () => {
           <span>Yearly Billing</span>
           <span className="percent">-25%</span>
         </div>
-
         <div className="list">
           <div className="list-check">
             <img className="icon-check" src={Check} alt="icon-check" />
@@ -96,7 +105,6 @@ const Main = () => {
             <span>Email reports</span>
           </div>
         </div>
-
         <button className="start-my-trial-button">Start my trial</button>
       </div>
     </div>
